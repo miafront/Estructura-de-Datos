@@ -1,0 +1,41 @@
+// EJERCICIO 34: Eliminar todas las apariciones de X
+// Enunciado: Eliminar lógicamente todas las ocurrencias de un valor X sin usar un arreglo auxiliar.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int MAX = 50;
+    int v[MAX];
+    int N, X;
+
+    cout << "Ingrese la cantidad de numeros: ";
+    cin >> N;
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    cout << "Ingrese el valor a eliminar: ";
+    cin >> X;
+
+    // Eliminar todas las apariciones de X
+    int nuevoN = 0;
+    for (int i = 0; i < N; i++) {
+        if (v[i] != X) {
+            v[nuevoN] = v[i];
+            nuevoN++;
+        }
+    }
+    N = nuevoN;
+
+    cout << "El arreglo sin el valor " << X << " es: ";
+    for (int i = 0; i < N; i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
