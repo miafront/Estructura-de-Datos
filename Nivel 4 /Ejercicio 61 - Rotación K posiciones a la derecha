@@ -1,0 +1,41 @@
+// EJERCICIO 61: Rotación K posiciones a la derecha
+// Enunciado: Rotar un arreglo N posiciones K hacia la derecha. Resolver correctamente cuando K > N usando K % N.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+    int K;
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    cout << "Ingrese cuantas posiciones rotar a la derecha: ";
+    cin >> K;
+
+    // Normalizar K (si K > N, equivale a K % N)
+    K = K % N;
+
+    // Rotar K veces una posición a la derecha
+    for (int r = 0; r < K; r++) {
+        int ultimo = v[N - 1];
+        for (int i = N - 1; i > 0; i--) {
+            v[i] = v[i - 1];
+        }
+        v[0] = ultimo;
+    }
+
+    cout << "El arreglo rotado es: ";
+    for (int i = 0; i < N; i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
