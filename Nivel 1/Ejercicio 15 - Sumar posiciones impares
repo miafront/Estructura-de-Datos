@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+    int suma = 0;
+
+    // Leer los 8 números, mostrando el índice real (0 a 7)
+    cout << "Ingrese 8 numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Indice " << i << ": ";
+        cin >> v[i];
+    }
+
+    // Sumar los elementos en índices impares: 1, 3, 5, 7
+    for (int i = 1; i < N; i += 2) {
+        suma += v[i];
+    }
+
+    cout << "La suma de los indices impares es: " << suma << endl;
+    return 0;
+}
+
