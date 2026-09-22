@@ -1,0 +1,29 @@
+// EJERCICIO 48: Rango y amplitud
+// Enunciado: Calcular mínimo, máximo y amplitud (máximo - mínimo).
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    int minimo = v[0], maximo = v[0];
+    for (int i = 1; i < N; i++) {
+        if (v[i] < minimo) minimo = v[i];
+        if (v[i] > maximo) maximo = v[i];
+    }
+
+    cout << "Minimo: " << minimo << endl;
+    cout << "Maximo: " << maximo << endl;
+    cout << "Amplitud: " << maximo - minimo << endl;
+
+    return 0;
+}
