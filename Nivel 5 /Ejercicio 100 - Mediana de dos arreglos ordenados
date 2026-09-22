@@ -55,3 +55,15 @@ int main() {
                 int minDer = (Ader < Bder ? Ader : Bder);
                 mediana = (maxIzq + minDer) / 2.0;
             }
+break;
+        } else if (Aizq > Bder) {
+            alto = i - 1;
+        } else {
+            bajo = i + 1;
+        }
+    }
+
+    cout << "La mediana conjunta es: " << mediana << endl;
+
+    return 0;
+}
