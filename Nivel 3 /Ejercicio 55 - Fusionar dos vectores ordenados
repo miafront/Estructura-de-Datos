@@ -1,0 +1,43 @@
+// EJERCICIO 55: Fusionar dos vectores ordenados
+// Enunciado: Dados dos arreglos ya ordenados ascendentemente, fusionarlos en uno también ordenado, sin ordenar nuevamente el resultado.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 4, M = 4;
+    int A[N], B[M];
+    int C[N + M];
+
+    cout << "Ingrese " << N << " elementos de A (ordenados):" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "A[" << i << "]: ";
+        cin >> A[i];
+    }
+    cout << "Ingrese " << M << " elementos de B (ordenados):" << endl;
+    for (int i = 0; i < M; i++) {
+        cout << "B[" << i << "]: ";
+        cin >> B[i];
+    }
+
+    // Fusionar los dos arreglos ordenados
+    int i = 0, j = 0, k = 0;
+    while (i < N && j < M) {
+        if (A[i] <= B[j]) {
+            C[k++] = A[i++];
+        } else {
+            C[k++] = B[j++];
+        }
+    }
+    while (i < N) C[k++] = A[i++];
+    while (j < M) C[k++] = B[j++];
+
+    cout << "La fusion ordenada es: ";
+    for (int x = 0; x < N + M; x++) {
+        cout << C[x] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
