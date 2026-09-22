@@ -1,0 +1,42 @@
+// EJERCICIO 93: Ventana de suma máxima de tamaño K
+// Enunciado: Encontrar la suma máxima de exactamente K elementos consecutivos mediante ventana deslizante.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+    int K;
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    cout << "Ingrese el tamaño de la ventana K: ";
+    cin >> K;
+
+    // Suma de la primera ventana
+    int suma = 0;
+    for (int i = 0; i < K; i++) suma += v[i];
+
+    int maxSuma = suma;
+    int inicio = 0;
+
+    // Deslizar la ventana
+    for (int i = K; i < N; i++) {
+        suma = suma - v[i - K] + v[i];
+        if (suma > maxSuma)a {
+            maxSuma = suma;
+            inicio = i - K + 1;
+        }
+    }
+
+    cout << "La suma maxima de ventana de " << K << " es: " << maxSuma
+         << " (inicia en el indice " << inicio << ")." << endl;
+
+    return 0;
+}
