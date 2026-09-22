@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int v[6];
+
+    // Leer los 6 números
+    cout << "Ingrese 6 numeros enteros:" << endl;
+    for (int i = 0; i < 6; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Mostrar desde el último hasta el primero
+    cout << "El vector en orden inverso es: ";
+    for (int i = 5; i >= 0; i--) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
