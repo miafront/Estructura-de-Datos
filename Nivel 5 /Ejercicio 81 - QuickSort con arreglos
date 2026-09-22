@@ -1,29 +1,44 @@
-// EJERCICIO 81: QuickSort con arreglos
-// Enunciado: Implementar QuickSort recursivo sobre un arreglo de enteros, sin std::sort ni std::vector.
-// Restricción: resolver sin std::vector.
-
 #include <iostream>
 using namespace std;
 
-// Función que particiona y devuelve la posición del pivote
-int particion(int v[], int bajo, int alto) {
-    int pivote = v[alto];
-    int i = bajo - 1;
+// Ejercicio 81. QuickSort con arreglos
+// Enunciado: Implementar QuickSort recursivo sobre un arreglo de enteros,
+// sin std::sort ni std::vector.
+// Restricción: resolver sin std::vector.
 
-    for (int j = bajo; j < alto; j++) {
-        if (v[j] <= pivote) {
+void quicksort(int v[], int inicio, int fin) {
+    if (inicio >= fin) return;          // si no hay nada, corto
+
+    int pivote = v[fin];                // el último es el "jefe"
+    int i = inicio - 1;
+
+    for (int j = inicio; j < fin; j++) {
+        if (v[j] < pivote) {            // si es menor que el jefe
             i++;
-            int aux = v[i];
-            v[i] = v[j];
-            v[j] = aux;
+            swap(v[i], v[j]);           // lo mando a la izquierda
         }
     }
-    // Colocar el pivote en su posición final
-    int aux = v[i + 1];
-    v[i + 1] = v[alto];
-    v[alto] = aux;
-    return i + 1;
+
+    swap(v[i + 1], v[fin]);             // el jefe a su lugar
+
+    quicksort(v, inicio, i);            // ordeno la izquierda
+    quicksort(v, i + 2, fin);           // ordeno la derecha
 }
 
-// QuickSort recursivo
-v
+int main() {
+    int v[] = {5, 2, 8, 1, 9, 3, 6};
+    int N = 7;
+
+    quicksort(v, 0, N - 1);
+
+    for (int i = 0; i < N; i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+
+    return 0;
+}
