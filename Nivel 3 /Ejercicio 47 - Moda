@@ -1,0 +1,35 @@
+// EJERCICIO 47: Moda
+// Enunciado: Encontrar el valor con mayor frecuencia. Si hay empate, devolver el menor valor entre las modas.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Buscar la moda
+    int moda = v[0], maxFrec = 0;
+    for (int i = 0; i < N; i++) {
+        int contador = 0;
+        for (int j = 0; j < N; j++) {
+            if (v[j] == v[i]) contador++;
+        }
+        // Si hay empate, elegir el menor valor
+        if (contador > maxFrec || (contador == maxFrec && v[i] < moda)) {
+            moda = v[i];
+            maxFrec = contador;
+        }
+    }
+
+    cout << "La moda es: " << moda << " (aparece " << maxFrec << " veces)." << endl;
+
+    return 0;
+}
