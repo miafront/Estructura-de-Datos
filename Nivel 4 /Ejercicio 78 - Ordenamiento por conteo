@@ -1,0 +1,41 @@
+// EJERCICIO 78: Ordenamiento por conteo
+// Enunciado: Ordenar enteros en el rango 0..100 implementando Counting Sort con arreglos auxiliares.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    const int RANGO = 101;
+    int v[N];
+    int frec[RANGO] = {0};
+
+    cout << "Ingrese " << N << " numeros (0 a 100):" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Contar frecuencias
+    for (int i = 0; i < N; i++) {
+        frec[v[i]]++;
+    }
+
+    // Reconstruir el arreglo ordenado
+    int pos = 0;
+    for (int valor = 0; valor < RANGO; valor++) {
+        while (frec[valor] > 0) {
+            v[pos++] = valor;
+            frec[valor]--;
+        }
+    }
+
+    cout << "El arreglo ordenado es: ";
+    for (int i = 0; i < N; i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
