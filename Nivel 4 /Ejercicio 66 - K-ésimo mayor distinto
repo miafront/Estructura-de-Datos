@@ -1,0 +1,51 @@
+// EJERCICIO 66: K-ésimo mayor distinto
+// Enunciado: Encontrar el K-ésimo mayor valor distinto del arreglo.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+    int K;
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    cout << "Ingrese K: ";
+    cin >> K;
+
+    // Eliminar duplicados
+    int unicos[N];
+    int nu = 0;
+    for (int i = 0; i < N; i++) {
+        bool repetido = false;
+        for (int j = 0; j < nu; j++) {
+            if (unicos[j] == v[i]) { repetido = true; break; }
+        }
+        if (!repetido) unicos[nu++] = v[i];
+    }
+
+    // Ordenar descendente
+    for (int i = 0; i < nu - 1; i++) {
+        for (int j = 0; j < nu - 1 - i; j++) {
+            if (unicos[j] < unicos[j + 1]) {
+                int aux = unicos[j];
+                unicos[j] = unicos[j + 1];
+                unicos[j + 1] = aux;
+            }
+        }
+    }
+
+    if (K <= nu) {
+        cout << "El " << K << "-esimo mayor distinto es: " << unicos[K - 1] << endl;
+    } else {
+        cout << "No existen " << K << " valores distintos." << endl;
+    }
+
+    return 0;
+}
