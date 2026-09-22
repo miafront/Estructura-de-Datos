@@ -1,0 +1,34 @@
+// EJERCICIO 59: Detectar palíndromo numérico
+// Enunciado: Determinar si el arreglo se lee igual de izquierda a derecha y de derecha a izquierda.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Comparar desde los extremos hacia el centro
+    bool esPalindromo = true;
+    for (int i = 0; i < N / 2; i++) {
+        if (v[i] != v[N - 1 - i]) {
+            esPalindromo = false;
+            break;
+        }
+    }
+
+    if (esPalindromo) {
+        cout << "El arreglo SI es palindromo." << endl;
+    } else {
+        cout << "El arreglo NO es palindromo." << endl;
+    }
+
+    return 0;
+}
