@@ -1,0 +1,58 @@
+// EJERCICIO 82: Merge Sort con arreglos
+// Enunciado: Implementar Merge Sort usando un arreglo auxiliar temporal y fusión manual.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+// Fusionar dos mitades ordenadas
+void fusionar(int v[], int bajo, int medio, int alto, int temp[]) {
+    int i = bajo, j = medio + 1, k = bajo;
+
+    while ((i <= medio) && (j <= alto)) {
+        if (v[i] <= v[j]) {
+            temp[k++] = v[i++];
+        } else {
+            temp[k++] = v[j++];
+        }
+    }
+    while (i <= medio) temp[k++] = v[i++];
+    while (j <= alto) temp[k++] = v[j++];
+
+    // Copiar de vuelta al arreglo original
+    for (int x = bajo; x <= alto; x++) {
+        v[x] = temp[x];
+    }
+}
+
+// Merge Sort recursivo
+void mergeSort(int v[], int bajo, int alto, int temp[]) {
+    if (bajo < alto) {
+        int medio = (bajo + alto) / 2;
+        mergeSort(v, bajo, medio, temp);
+        mergeSort(v, medio + 1, alto, temp);
+        fusionar(v, bajo, medio, alto, temp);
+    }
+}
+
+int main() {
+    const int N = 8;
+    int v[N];
+    int temp[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    mergeSort(v, 0, N - 1, temp);
+
+    cout << "El arreglo ordenado es: ";
+    for (int i = 0; i < N; i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
