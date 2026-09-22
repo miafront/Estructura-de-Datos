@@ -1,0 +1,41 @@
+// EJERCICIO 62: Rotación K posiciones a la izquierda
+// Enunciado: Rotar un arreglo K posiciones a la izquierda, normalizando K con módulo N.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+    int K;
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    cout << "Ingrese cuantas posiciones rotar a la izquierda: ";
+    cin >> K;
+
+    // Normalizar K
+    K = K % N;
+
+    // Rotar K veces una posición a la izquierda
+    for (int r = 0; r < K; r++) {
+        int primero = v[0];
+        for (int i = 0; i < N - 1; i++) {
+            v[i] = v[i + 1];
+        }
+        v[N - 1] = primero;
+    }
+
+    cout << "El arreglo rotado es: ";
+    for (int i = 0; i < N; i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
