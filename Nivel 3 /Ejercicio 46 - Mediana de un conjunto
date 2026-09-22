@@ -1,0 +1,40 @@
+// EJERCICIO 46: Mediana de un conjunto
+// Enunciado: Leer N valores, ordenarlos sin std::sort y calcular la mediana. Para N par, promediar los dos centrales.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Ordenar con Bubble Sort
+    for (int i = 0; i < N - 1; i++) {
+        for (int j = 0; j < N - 1 - i; j++) {
+            if (v[j] > v[j + 1]) {
+                int aux = v[j];
+                v[j] = v[j + 1];
+                v[j + 1] = aux;
+            }
+        }
+    }
+
+    // Calcular la mediana
+    double mediana;
+    if (N % 2 == 1) {
+        mediana = v[N / 2];
+    } else {
+        mediana = (v[N / 2 - 1] + v[N / 2]) / 2.0;
+    }
+
+    cout << "La mediana es: " << mediana << endl;
+
+    return 0;
+}
