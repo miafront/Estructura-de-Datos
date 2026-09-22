@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 5;
+    int v[N];
+    int cuadrado[N];
+
+    // Leer los 5 números
+    cout << "Ingrese 5 numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Calcular el cuadrado de cada elemento
+    for (int i = 0; i < N; i++) {
+        cuadrado[i] = v[i] * v[i];
+    }
+
+    // Mostrar el arreglo de cuadrados
+    cout << "Los cuadrados son: ";
+    for (int i = 0; i < N; i++) {
+        cout << cuadrado[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
