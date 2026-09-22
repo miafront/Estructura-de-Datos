@@ -1,0 +1,30 @@
+// EJERCICIO 75: Mayor producto de dos elementos
+// Enunciado: Encontrar el máximo producto entre dos posiciones distintas considerando también números negativos.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Buscar el mayor producto de dos posiciones distintas
+    int maxProd = v[0] * v[1];
+    for (int i = 0; i < N; i++) {
+        for (int j = i + 1; j < N; j++) {
+            int prod = v[i] * v[j];
+            if (prod > maxProd) maxProd = prod;
+        }
+    }
+
+    cout << "El mayor producto de dos elementos es: " << maxProd << endl;
+
+    return 0;
+}
