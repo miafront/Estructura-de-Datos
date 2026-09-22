@@ -1,0 +1,40 @@
+// EJERCICIO 70: Subarreglo con suma mínima
+// Enunciado: Encontrar la suma mínima de un segmento contiguo y reportar sus índices.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Versión de Kadane para mínima suma
+    int minActual = v[0], minGlobal = v[0];
+    int inicio = 0, fin = 0, inicioActual = 0;
+
+    for (int i = 1; i < N; i++) {
+        if (v[i] < minActual + v[i]) {
+            minActual = v[i];
+            inicioActual = i;
+        } else {
+            minActual = minActual + v[i];
+        }
+        if (minActual < minGlobal) {
+            minGlobal = minActual;
+            inicio = inicioActual;
+            fin = i;
+        }
+    }
+
+    cout << "La suma minima es: " << minGlobal
+         << " (desde el indice " << inicio << " hasta el " << fin << ")." << endl;
+
+    return 0;
+}
