@@ -1,0 +1,46 @@
+// EJERCICIO 64: Partición alrededor de un pivote
+// Enunciado: Dado X, reorganizar el arreglo de modo que primero queden valores menores que X, luego iguales y después mayores.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+    int X;
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    cout << "Ingrese el pivote X: ";
+    cin >> X;
+
+    // Construir resultado: menores, iguales, mayores
+    int resultado[N];
+    int nr = 0;
+
+    // Menores que X
+    for (int i = 0; i < N; i++) {
+        if (v[i] < X) resultado[nr++] = v[i];
+    }
+    // Iguales a X
+    for (int i = 0; i < N; i++) {
+        if (v[i] == X) resultado[nr++] = v[i];
+    }
+    // Mayores que X
+    for (int i = 0; i < N; i++) {
+        if (v[i] > X) resultado[nr++] = v[i];
+    }
+
+    cout << "El arreglo particionado es: ";
+    for (int i = 0; i < N; i++) {
+        cout << resultado[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
