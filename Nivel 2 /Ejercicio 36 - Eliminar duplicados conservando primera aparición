@@ -1,0 +1,41 @@
+// EJERCICIO 36: Eliminar duplicados conservando primera aparición
+// Enunciado: Construir el resultado sin valores repetidos y respetando la primera aparición de cada elemento.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+    int resultado[N];
+    int nr = 0;
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Solo agregar si no está ya en el resultado
+    for (int i = 0; i < N; i++) {
+        bool repetido = false;
+        for (int j = 0; j < nr; j++) {
+            if (resultado[j] == v[i]) {
+                repetido = true;
+                break;
+            }
+        }
+        if (!repetido) {
+            resultado[nr++] = v[i];
+        }
+    }
+
+    cout << "El arreglo sin duplicados es: ";
+    for (int i = 0; i < nr; i++) {
+        cout << resultado[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
