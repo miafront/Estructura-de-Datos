@@ -1,0 +1,41 @@
+// EJERCICIO 91: Siguiente elemento mayor
+// Enunciado: Para cada posición, encontrar el primer valor a su derecha que sea mayor. Implementar una solución eficiente con un arreglo usado como pila manual.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+    int resultado[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Pila manual: guardamos índices
+    int pila[N];
+    int tope = -1;
+
+    // Inicializar resultado con -1 (no hay mayor)
+    for (int i = 0; i < N; i++) resultado[i] = -1;
+
+    for (int i = 0; i < N; i++) {
+        // Mientras el actual sea mayor que el tope
+        while (tope >= 0 && v[i] > v[pila[tope]]) {
+            resultado[pila[tope]] = v[i];
+            tope--;
+        }
+        pila[++tope] = i;
+    }
+
+    cout << "Siguiente elemento mayor para cada posicion:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << v[i] << " -> " << resultado[i] << endl;
+    }
+
+    return 0;
+}
