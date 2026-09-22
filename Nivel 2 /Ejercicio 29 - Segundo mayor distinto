@@ -1,0 +1,40 @@
+// EJERCICIO 29: Segundo mayor distinto
+// Enunciado: Encontrar el segundo valor mayor distinto del arreglo. Si no existe, indicarlo.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Buscar el mayor y el segundo mayor distinto
+    int mayor = v[0];
+    for (int i = 1; i < N; i++) {
+        if (v[i] > mayor) mayor = v[i];
+    }
+
+    int segundo = -1;
+    bool existe = false;
+    for (int i = 0; i < N; i++) {
+        if (v[i] != mayor && (!existe || v[i] > segundo)) {
+            segundo = v[i];
+            existe = true;
+        }
+    }
+
+    if (existe) {
+        cout << "El segundo mayor distinto es: " << segundo << endl;
+    } else {
+        cout << "No existe segundo mayor distinto." << endl;
+    }
+
+    return 0;
+}
