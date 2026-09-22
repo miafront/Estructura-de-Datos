@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    double v[N];
+    double suma = 0;
+
+    // Leer los 6 números
+    cout << "Ingrese 6 numeros reales:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Sumar todos los elementos
+    for (int i = 0; i < N; i++) {
+        suma += v[i];
+    }
+
+    // Calcular y mostrar el promedio
+    double promedio = suma / N;
+    cout << "El promedio es: " << promedio << endl;
+
+    return 0;
+}
