@@ -1,0 +1,45 @@
+// EJERCICIO 84: Búsqueda binaria: primera aparición
+// Enunciado: En un arreglo ordenado con duplicados, encontrar el primer índice de X en O(log N).
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+    int X;
+
+    cout << "Ingrese " << N << " numeros enteros (ordenados):" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    cout << "Ingrese el valor a buscar: ";
+    cin >> X;
+
+    // Búsqueda binaria para primera aparición
+    int inicio = 0, fin = N - 1;
+    int resultado = -1;
+
+    while (inicio <= fin) {
+        int medio = (inicio + fin) / 2;
+        if (v[medio] == X) {
+            resultado = medio;
+            fin = medio - 1; // Seguir buscando a la izquierda
+        } else if (v[medio] < X) {
+            inicio = medio + 1;
+        } else {
+            fin = medio - 1;
+        }
+    }
+
+    if (resultado != -1) {
+        cout << "La primera aparicion de " << X << " esta en el indice " << resultado << "." << endl;
+    } else {
+        cout << "El valor " << X << " no esta en el arreglo." << endl;
+    }
+
+    return 0;
+}
