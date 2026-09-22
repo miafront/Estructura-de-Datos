@@ -1,0 +1,32 @@
+// EJERCICIO 73: Prefijos acumulados
+// Enunciado: Construir P donde P[i] contiene la suma de A[0] hasta A[i].
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int A[N];
+    int P[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> A[i];
+    }
+
+    // Construir prefijos acumulados
+    P[0] = A[0];
+    for (int i = 1; i < N; i++) {
+        P[i] = P[i - 1] + A[i];
+    }
+
+    cout << "Los prefijos acumulados son: ";
+    for (int i = 0; i < N; i++) {
+        cout << P[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
