@@ -1,0 +1,36 @@
+// EJERCICIO 25: Sumar dos vectores
+// Enunciado: Leer dos arreglos A y B de igual tamaño y generar C donde C[i] = A[i] + B[i].
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 5;
+    int A[N], B[N], C[N];
+
+    cout << "Ingrese los elementos del arreglo A:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "A[" << i << "]: ";
+        cin >> A[i];
+    }
+
+    cout << "Ingrese los elementos del arreglo B:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "B[" << i << "]: ";
+        cin >> B[i];
+    }
+
+    // Sumar elemento por elemento
+    for (int i = 0; i < N; i++) {
+        C[i] = A[i] + B[i];
+    }
+
+    cout << "El arreglo C (A + B) es: ";
+    for (int i = 0; i < N; i++) {
+        cout << C[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
