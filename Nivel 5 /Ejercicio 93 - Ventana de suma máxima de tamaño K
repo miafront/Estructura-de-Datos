@@ -4,39 +4,15 @@
 
 #include <iostream>
 using namespace std;
-
-int main() {
-    const int N = 8;
-    int v[N];
-    int K;
-
-    cout << "Ingrese " << N << " numeros enteros:" << endl;
-    for (int i = 0; i < N; i++) {
-        cout << "Numero " << i + 1 << ": ";
-        cin >> v[i];
+int main(){
+    int arreglo[7] = {1, 2, 7, 8, 5, 1, 3};
+    int k = 3, suma = 0, mejor = 0;
+    for(int i = 0; i < k; i++) suma += arreglo[i];
+    mejor = suma;
+    for(int i = k; i < 7; i++){
+        suma += arreglo[i] - arreglo[i - k];
+        if(suma > mejor) mejor = suma;
     }
-
-    cout << "Ingrese el tamaño de la ventana K: ";
-    cin >> K;
-
-    // Suma de la primera ventana
-    int suma = 0;
-    for (int i = 0; i < K; i++) suma += v[i];
-
-    int maxSuma = suma;
-    int inicio = 0;
-
-    // Deslizar la ventana
-    for (int i = K; i < N; i++) {
-        suma = suma - v[i - K] + v[i];
-        if (suma > maxSuma)a {
-            maxSuma = suma;
-            inicio = i - K + 1;
-        }
-    }
-
-    cout << "La suma maxima de ventana de " << K << " es: " << maxSuma
-         << " (inicia en el indice " << inicio << ")." << endl;
-
+    cout << "Suma max = " << mejor << endl;
     return 0;
 }
