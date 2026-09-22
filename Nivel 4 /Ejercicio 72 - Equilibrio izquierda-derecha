@@ -1,0 +1,37 @@
+// EJERCICIO 72: Equilibrio izquierda-derecha
+// Enunciado: Encontrar un índice i cuya suma de elementos a la izquierda sea igual a la suma de elementos a la derecha.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Buscar índice de equilibrio
+    int indice = -1;
+    for (int i = 0; i < N; i++) {
+        int sumaIzq = 0, sumaDer = 0;
+        for (int j = 0; j < i; j++) sumaIzq += v[j];
+        for (int j = i + 1; j < N; j++) sumaDer += v[j];
+        if (sumaIzq == sumaDer) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice != -1) {
+        cout << "El indice de equilibrio es: " << indice << endl;
+    } else {
+        cout << "No existe indice de equilibrio." << endl;
+    }
+
+    return 0;
+}
