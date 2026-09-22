@@ -1,0 +1,44 @@
+// EJERCICIO 74: Consultas de suma por rango
+// Enunciado: Construir prefijos y responder Q consultas [L,R] en O(1) por consulta después del preprocesamiento.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int A[N];
+    int P[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> A[i];
+    }
+
+    // Preprocesamiento: prefijos acumulados
+    P[0] = A[0];
+    for (int i = 1; i < N; i++) {
+        P[i] = P[i - 1] + A[i];
+    }
+
+    // Responder consultas
+    int Q;
+    cout << "Ingrese cuantas consultas quiere hacer: ";
+    cin >> Q;
+
+    for (int q = 0; q < Q; q++) {
+        int L, R;
+        cout << "Consulta " << q + 1 << " - ingrese L y R (0 a " << N - 1 << "): ";
+        cin >> L >> R;
+        int suma;
+        if (L == 0) {
+            suma = P[R];
+        } else {
+            suma = P[R] - P[L - 1];
+        }
+        cout << "Suma del rango [" << L << "," << R << "]: " << suma << endl;
+    }
+
+    return 0;
+}
