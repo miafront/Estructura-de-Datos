@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    int v[N];
+    int contador = 0;
+
+    // Leer los 8 números
+    cout << "Ingrese 8 numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    // Contar los negativos
+    for (int i = 0; i < N; i++) {
+        if (v[i] < 0) {
+            contador++;
+        }
+    }
+
+    // Mostrar el resultado
+    cout << "Cantidad de negativos: " << contador << endl;
+
+    return 0;
+}
