@@ -1,0 +1,32 @@
+// EJERCICIO 71: Máxima suma circular
+// Enunciado: Calcular la suma máxima de un subarreglo contiguo considerando que el arreglo es circular.
+// Restricción: resolver sin std::vector.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int N = 6;
+    int v[N];
+
+    cout << "Ingrese " << N << " numeros enteros:" << endl;
+    for (int i = 0; i < N; i++) {
+        cout << "Numero " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    int maxGlobal = v[0];
+    // Probar todos los subarreglos circulares
+    for (int inicio = 0; inicio < N; inicio++) {
+        int suma = 0;
+        for (int largo = 0; largo < N; largo++) {
+            int idx = (inicio + largo) % N;
+            suma += v[idx];
+            if (suma > maxGlobal) maxGlobal = suma;
+        }
+    }
+
+    cout << "La suma circular maxima es: " << maxGlobal << endl;
+
+    return 0;
+}
