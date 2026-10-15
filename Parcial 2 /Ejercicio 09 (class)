@@ -1,0 +1,149 @@
+#include <iostream>
+using namespace std;
+
+class Lista {
+private:
+    struct Nodo {
+        int dato;
+        Nodo* next;
+
+        Nodo(int valor) {
+            dato = valor;
+            next = nullptr;
+        }
+    };
+
+    Nodo* head;
+
+    void agregar(Nodo*& inicio, Nodo*& fin, Nodo* nodo) {
+        if (inicio == nullptr) {
+            inicio = fin = nodo;
+        } else {
+            fin->next = nodo;
+            fin = nodo;
+        }
+    }
+
+public:
+    Lista() {
+        head = nullptr;
+    }
+
+    ~Lista() {
+        while (head != nullptr) {
+            Nodo* temporal = head;
+            head = head->next;
+            delete temporal;
+        }
+    }
+
+    void insertarFinal(int dato) {
+        Nodo* nuevo = new Nodo(dato);
+
+        if (head == nullptr) {
+            head = nuevo;
+            return;
+        }
+
+        Nodo* actual = head;
+
+        while (actual->next != nullptr) {
+            actual = actual->next;
+        }
+
+        actual->next = nuevo;
+    }
+
+    void imprimir() const {
+        Nodo* actual = head;
+
+        while (actual != nullptr) {
+            cout << actual->dato;
+
+            if (actual->next != nullptr) {
+                cout << " -> ";
+            }
+
+            actual = actual->next;
+        }
+
+        cout << " -> nullptr" << endl;
+    }
+
+    void particionar(int x) {
+        Nodo* menoresH = nullptr;
+        Nodo* menoresT = nullptr;
+
+        Nodo* igualesH = nullptr;
+        Nodo* igualesT = nullptr;
+
+        Nodo* mayoresH = nullptr;
+        Nodo* mayoresT = nullptr;
+
+        Nodo* actual = head;
+
+        while (actual != nullptr) {
+            Nodo* siguiente = actual->next;
+            actual->next = nullptr;
+
+            if (actual->dato < x) {
+                agregar(menoresH, menoresT, actual);
+            } else if (actual->dato == x) {
+                agregar(igualesH, igualesT, actual);
+            } else {
+                agregar(mayoresH, mayoresT, actual);
+            }
+
+            actual = siguiente;
+        }
+
+        head = nullptr;
+        Nodo* tail = nullptr;
+
+        if (menoresH != nullptr) {
+            head = menoresH;
+            tail = menoresT;
+        }
+
+        if (igualesH != nullptr) {
+            if (head == nullptr) {
+                head = igualesH;
+            } else {
+                tail->next = igualesH;
+            }
+
+            tail = igualesT;
+        }
+
+        if (mayoresH != nullptr) {
+            if (head == nullptr) {
+                head = mayoresH;
+            } else {
+                tail->next = mayoresH;
+            }
+
+            tail = mayoresT;
+        }
+    }
+};
+
+int main() {
+    Lista lista;
+
+    int valores[] = {3, 5, 8, 5, 10, 2, 1, 5, 7};
+    int n = sizeof(valores) / sizeof(valores[0]);
+
+    for (int i = 0; i < n; i++) {
+        lista.insertarFinal(valores[i]);
+    }
+
+    cout << "Lista original: ";
+    lista.imprimir();
+
+    lista.particionar(5);
+
+    cout << "Lista particionada: ";
+    lista.imprimir();
+
+    return 0;
+}
