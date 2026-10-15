@@ -1,0 +1,138 @@
+#include <iostream>
+using namespace std;
+
+struct Nodo {
+    int dato;
+    Nodo* next;
+};
+
+void agregar(Nodo*& head, Nodo*& tail, Nodo* nodo) {
+    if (head == nullptr) {
+        head = tail = nodo;
+    } else {
+        tail->next = nodo;
+        tail = nodo;
+    }
+}
+
+Nodo* particionar(Nodo* head, int x) {
+    Nodo* menoresH = nullptr;
+    Nodo* menoresT = nullptr;
+
+    Nodo* igualesH = nullptr;
+    Nodo* igualesT = nullptr;
+
+    Nodo* mayoresH = nullptr;
+    Nodo* mayoresT = nullptr;
+
+    Nodo* actual = head;
+
+    while (actual != nullptr) {
+        Nodo* siguiente = actual->next;
+        actual->next = nullptr;
+
+        if (actual->dato < x) {
+            agregar(menoresH, menoresT, actual);
+        } else if (actual->dato == x) {
+            agregar(igualesH, igualesT, actual);
+        } else {
+            agregar(mayoresH, mayoresT, actual);
+        }
+
+        actual = siguiente;
+    }
+
+    Nodo* nuevaHead = nullptr;
+    Nodo* nuevaTail = nullptr;
+
+    if (menoresH != nullptr) {
+        nuevaHead = menoresH;
+        nuevaTail = menoresT;
+    }
+
+    if (igualesH != nullptr) {
+        if (nuevaHead == nullptr) {
+            nuevaHead = igualesH;
+        } else {
+            nuevaTail->next = igualesH;
+        }
+        nuevaTail = igualesT;
+    }
+
+    if (mayoresH != nullptr) {
+        if (nuevaHead == nullptr) {
+            nuevaHead = mayoresH;
+        } else {
+            nuevaTail->next = mayoresH;
+        }
+        nuevaTail = mayoresT;
+    }
+
+    return nuevaHead;
+}
+
+void imprimirLista(Nodo* head) {
+    Nodo* actual = head;
+
+    while (actual != nullptr) {
+        cout << actual->dato;
+
+        if (actual->next != nullptr) {
+            cout << " -> ";
+        }
+
+        actual = actual->next;
+    }
+
+    cout << " -> nullptr" << endl;
+}
+
+void insertarFinal(Nodo*& head, int dato) {
+    Nodo* nuevo = new Nodo{dato, nullptr};
+
+    if (head == nullptr) {
+        head = nuevo;
+        return;
+    }
+
+    Nodo* actual = head;
+
+    while (actual->next != nullptr) {
+        actual = actual->next;
+    }
+
+    actual->next = nuevo;
+}
+
+void liberarLista(Nodo*& head) {
+    while (head != nullptr) {
+        Nodo* temporal = head;
+        head = head->next;
+        delete temporal;
+    }
+}
+
+int main() {
+    Nodo* head = nullptr;
+
+    int valores[] = {3, 5, 8, 5, 10, 2, 1, 5, 7};
+    int n = sizeof(valores) / sizeof(valores[0]);
+
+    for (int i = 0; i < n; i++) {
+        insertarFinal(head, valores[i]);
+    }
+
+    int x = 5;
+
+    cout << "Lista original: ";
+    imprimirLista(head);
+
+    head = particionar(head, x);
+
+    cout << "Lista particionada: ";
+    imprimirLista(head);
+
+    liberarLista(head);
+
+    return 0;
+}
