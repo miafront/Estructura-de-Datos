@@ -1,0 +1,261 @@
+#include <iostream>
+using namespace std;
+
+class DoublyList {
+private:
+    struct Node {
+        int value;
+        Node* next;
+        Node* prev;
+
+        Node(int v) : value(v), next(nullptr), prev(nullptr) {}
+    };
+
+    Node* head;
+    Node* tail;
+
+public:
+    // Constructor
+    DoublyList() : head(nullptr), tail(nullptr) {}
+
+    // Evitar copias superficiales de la lista
+    DoublyList(const DoublyList&) = delete;
+    DoublyList& operator=(const DoublyList&) = delete;
+
+    // Destructor
+    ~DoublyList() {
+        Node* current = head;
+
+        while (current != nullptr) {
+            Node* nextNode = current->next;
+            delete current;
+            current = nextNode;
+        }
+    }
+
+    // Agregar un nodo al final
+    void append(int value) {
+        Node* newNode = new Node(value);
+
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode->prev = tail;
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Mostrar de izquierda a derecha
+    void printForward() const {
+        Node* current = head;
+
+        if (current == nullptr) {
+            cout << "(empty)";
+        }
+
+        while (current != nullptr) {
+            cout << current->value;
+
+            if (current->next != nullptr) {
+                cout << " <-> ";
+            }
+
+            current = current->next;
+        }
+
+        cout << '\n';
+    }
+
+    // Mostrar de derecha a izquierda
+    void printBackward() const {
+        Node* current = tail;
+
+        if (current == nullptr) {
+            cout << "(empty)";
+        }
+
+        while (current != nullptr) {
+            cout << current->value;
+
+            if (current->prev != nullptr) {
+                cout << " <-> ";
+            }
+
+            current = current->prev;
+        }
+
+        cout << '\n';
+    }
+
+    // Fusionar dos listas ordenadas reutilizando sus nodos
+    void mergeFrom(DoublyList& a, DoublyList& b) {
+        Node* p = a.head;
+        Node* q = b.head;
+
+        while (p != nullptr || q != nullptr) {
+            Node* chosen;
+
+            if (q == nullptr ||
+                (p != nullptr && p->value <= q->value)) {
+
+                chosen = p;
+                p = p->next;
+
+            } else {
+                chosen = q;
+                q = q->next;
+            }
+
+            chosen->prev = tail;
+            chosen->next = nullptr;
+
+            if (tail != nullptr) {
+                tail->next = chosen;
+            } else {
+                head = chosen;
+            }
+
+            tail = chosen;
+        }
+
+        // Las listas originales quedan vacías
+        a.head = nullptr;
+        a.tail = nullptr;
+
+        b.head = nullptr;
+        b.tail = nullptr;
+    }
+
+    // Verificar enlaces y orden ascendente
+    bool verify() const {
+        Node* previous = nullptr;
+        Node* current = head;
+
+        while (current != nullptr) {
+            if (current->prev != previous) {
+                return false;
+            }
+
+            if (previous != nullptr &&
+                previous->value > current->value) {
+                return false;
+            }
+
+            previous = current;
+            current = current->next;
+        }
+
+        if (previous != tail) {
+            return false;
+        }
+
+        // Verificar en sentido inverso
+        Node* nextNode = nullptr;
+        current = tail;
+
+        while (current != nullptr) {
+            if (current->next != nextNode) {
+                return false;
+            }
+
+            if (nextNode != nullptr &&
+                current->value > nextNode->value) {
+                return false;
+            }
+
+            nextNode = current;
+            current = current->prev;
+        }
+
+        return nextNode == head;
+    }
+
+    // Consultar si la lista está vacía
+    bool isEmpty() const {
+        return head == nullptr;
+    }
+
+    // Obtener el primer valor
+    int getHeadValue() const {
+        return head->value;
+    }
+
+    // Obtener el último valor
+    int getTailValue() const {
+        return tail->value;
+    }
+};
+
+int main() {
+    DoublyList a;
+    DoublyList b;
+    DoublyList merged;
+
+    int n, value;
+
+    // Ingresar lista A
+    cout << "Cantidad de elementos de A: ";
+    cin >> n;
+
+    cout << "Ingrese los elementos de A en orden ascendente:\n";
+
+    for (int i = 0; i < n; i++) {
+        cin >> value;
+        a.append(value);
+    }
+
+    // Ingresar lista B
+    cout << "Cantidad de elementos de B: ";
+    cin >> n;
+
+    cout << "Ingrese los elementos de B en orden ascendente:\n";
+
+    for (int i = 0; i < n; i++) {
+        cin >> value;
+        b.append(value);
+    }
+
+    // Mostrar listas originales
+    cout << "\nAntes de la fusion\n";
+
+    cout << "Lista A: ";
+    a.printForward();
+
+    cout << "Lista B: ";
+    b.printForward();
+
+    // Fusionar
+    cout << "\nFusionando listas...\n";
+
+    merged.mergeFrom(a, b);
+
+    // Mostrar resultado
+    cout << "\nDespues de la fusion\n";
+
+    cout << "Resultado ascendente: ";
+    merged.printForward();
+
+    cout << "Resultado descendente: ";
+    merged.printBackward();
+
+    // Verificar resultado
+    cout << "\nVerificacion\n";
+
+    cout << "Enlaces y orden: "
+         << (merged.verify() ? "PASS" : "FAIL") << '\n';
+
+    cout << "Lista A vacia: "
+         << (a.isEmpty() ? "PASS" : "FAIL") << '\n';
+
+    cout << "Lista B vacia: "
+         << (b.isEmpty() ? "PASS" : "FAIL") << '\n';
+
+    if (!merged.isEmpty()) {
+        cout << "Valor de head: " << merged.getHeadValue() << '\n';
+        cout << "Valor de tail: " << merged.getTailValue() << '\n';
+    }
+
+    return 0;
+}
