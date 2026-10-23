@@ -1,0 +1,205 @@
+
+#include <iostream>
+using namespace std;
+
+// Estructura de cada nodo
+struct Node {
+    int value;
+    Node* next;
+    Node* prev;
+};
+
+// Estructura que representa la lista doble
+struct DoublyList {
+    Node* head;
+    Node* tail;
+
+    // Inicializa una lista vacia
+    DoublyList() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    // Libera la memoria de todos los nodos
+    ~DoublyList() {
+        Node* current = head;
+
+        while (current != nullptr) {
+            Node* temp = current;
+            current = current->next;
+            delete temp;
+        }
+    }
+
+    // Agrega un nodo al final
+    void append(int value) {
+        Node* newNode = new Node{value, nullptr, nullptr};
+
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode->prev = tail;
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Imprime desde el primero hasta el ultimo
+    void printForward() const {
+        Node* current = head;
+
+        if (current == nullptr)
+            cout << "(vacia)";
+
+        while (current != nullptr) {
+            cout << current->value;
+
+            if (current->next != nullptr)
+                cout << " <-> ";
+
+            current = current->next;
+        }
+
+        cout << '\n';
+    }
+
+    // Imprime desde el ultimo hasta el primero
+    void printBackward() const {
+        Node* current = tail;
+
+        if (current == nullptr)
+            cout << "(vacia)";
+
+        while (current != nullptr) {
+            cout << current->value;
+
+            if (current->prev != nullptr)
+                cout << " <-> ";
+
+            current = current->prev;
+        }
+
+        cout << '\n';
+    }
+
+    // Comprueba el orden y los enlaces en ambas direcciones
+    bool verify() const {
+        Node* previous = nullptr;
+        Node* current = head;
+
+        while (current != nullptr) {
+            if (current->prev != previous)
+                return false;
+
+            if (previous != nullptr &&
+                previous->value > current->value)
+                return false;
+
+            previous = current;
+            current = current->next;
+        }
+
+        if (previous != tail)
+            return false;
+
+        Node* nextNode = nullptr;
+        current = tail;
+
+        while (current != nullptr) {
+            if (current->next != nextNode)
+                return false;
+
+            if (nextNode != nullptr &&
+                current->value > nextNode->value)
+                return false;
+
+            nextNode = current;
+            current = current->prev;
+        }
+
+        return nextNode == head;
+    }
+
+    // Fusiona dos listas ordenadas reutilizando sus nodos.
+    // La lista que recibe la fusion debe estar vacia.
+    void mergeFrom(DoublyList& a, DoublyList& b) {
+        Node* p = a.head;
+        Node* q = b.head;
+
+        while (p != nullptr || q != nullptr) {
+            Node* chosen;
+
+            // Elegir el menor de los nodos disponibles
+            if (q == nullptr ||
+                (p != nullptr && p->value <= q->value)) {
+                chosen = p;
+                p = p->next;
+            } else {
+                chosen = q;
+                q = q->next;
+            }
+
+            // Conectar el nodo elegido al resultado
+            chosen->prev = tail;
+            chosen->next = nullptr;
+
+            if (tail != nullptr)
+                tail->next = chosen;
+            else
+                head = chosen;
+
+            tail = chosen;
+        }
+
+        // Las listas originales ya no poseen esos nodos
+        a.head = nullptr;
+        a.tail = nullptr;
+        b.head = nullptr;
+        b.tail = nullptr;
+    }
+};
+
+int main() {
+    DoublyList A, B, result;
+    int n, m, value;
+
+    cout << "Cantidad de elementos de A: ";
+    cin >> n;
+
+    cout << "Ingresa A en orden ascendente:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> value;
+        A.append(value);
+    }
+
+    cout << "Cantidad de elementos de B: ";
+    cin >> m;
+
+    cout << "Ingresa B en orden ascendente:\n";
+    for (int i = 0; i < m; i++) {
+        cin >> value;
+        B.append(value);
+    }
+
+    cout << "\nLista A: ";
+    A.printForward();
+
+    cout << "Lista B: ";
+    B.printForward();
+
+    result.mergeFrom(A, B);
+
+    cout << "\nResultado hacia adelante: ";
+    result.printForward();
+
+    cout << "Resultado hacia atras: ";
+    result.printBackward();
+
+    if (result.verify())
+        cout << "Verificacion correcta.\n";
+    else
+        cout << "Error en el orden o los enlaces.\n";
+
+    return 0;
+}
